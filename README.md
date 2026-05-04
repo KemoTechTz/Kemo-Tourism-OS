@@ -40,5 +40,3 @@ Open `index.html` directly in a browser.
 
 ## Deploy
 Deploy as static files on Vercel, Netlify, or GitHub Pages.
-## Deployment
-Deploy as static files to Vercel/Netlify/GitHub Pages.
