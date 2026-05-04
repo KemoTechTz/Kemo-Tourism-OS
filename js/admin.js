@@ -1,9 +1,7 @@
-document.addEventListener('DOMContentLoaded',()=>{
+(function(){
 const root=document.getElementById('adminRoot'); if(!root) return;
-const st=window.KEMO_STORAGE,u=window.KEMO_UTILS;const b=st.get('bookings',[]);
-root.innerHTML=`<h1 class='hfont text-4xl'>Admin Command Center</h1><div class='my-2'><a class='chip' href='./guest-portal.html'>View Guest Portal</a> <button id='addExp' class='chip'>Add Experience</button></div><div class='overflow-auto glass p-3 rounded-xl'><table class='w-full text-sm'><tr><th>Ref</th><th>Guest</th><th>Experience</th><th>Destination</th><th>Amount</th><th>Payment</th><th>Status</th><th>Action</th></tr>${b.map((x,i)=>`<tr class='hover:bg-white/5'><td>${x.ref||'-'}</td><td>${u.guest(x)}</td><td>${u.title(x)}</td><td>${u.dest(x)}</td><td>${u.amount(x)}</td><td><select data-p='${i}'><option ${u.pay(x)==='Paid'?'selected':''}>Paid</option><option ${u.pay(x)==='Pending'?'selected':''}>Pending</option></select></td><td><select data-s='${i}'><option ${u.status(x)==='Confirmed'?'selected':''}>Confirmed</option><option ${u.status(x)==='Pending'?'selected':''}>Pending</option><option ${u.status(x)==='Cancelled'?'selected':''}>Cancelled</option></select></td><td><button data-v='${i}' class='chip'>View Booking Details</button></td></tr>`).join('')}</table></div>`;
-addExp.onclick=()=>u.showToast('Demo mode: experience creation request captured.');
-root.querySelectorAll('[data-s]').forEach(e=>e.onchange=()=>{const i=+e.dataset.s;const a=st.get('bookings',[]);if(a[i]){a[i].status=e.value;st.set('bookings',a);u.showToast('Booking status updated');}});
-root.querySelectorAll('[data-p]').forEach(e=>e.onchange=()=>{const i=+e.dataset.p;const a=st.get('bookings',[]);if(a[i]){a[i].paymentStatus=e.value;st.set('bookings',a);u.showToast('Payment status updated');}});
-root.querySelectorAll('[data-v]').forEach(e=>e.onclick=()=>{const x=st.get('bookings',[])[+e.dataset.v]||{};u.openModal(`<h3 class='hfont text-2xl'>Booking Details</h3><p>${u.guest(x)}</p><p>${u.title(x)}</p><p>${u.dest(x)}</p><p>${u.amount(x)}</p>`);});
-});
+const st=window.KEMO_STORAGE, u=window.KEMO_UTILS, c=localStorage.getItem('currency')||'USD';
+const b=st.get('bookings',[]);
+root.innerHTML=`<h1 class='hfont text-4xl'>Admin Command Center</h1><div class='glass p-4 rounded-xl mt-3 overflow-auto'><table class='w-full text-sm'><tr><th>Reference</th><th>Guest</th><th>Experience</th><th>Amount</th><th>Status</th></tr>${b.map((x,i)=>`<tr><td>${x.ref||'-'}</td><td>${u.guest(x)}</td><td>${x.title||'-'}</td><td>${u.money(x.priceUSD,c)}</td><td><select data-s='${i}'><option ${x.status==='Confirmed'?'selected':''}>Confirmed</option><option ${x.status==='Pending'?'selected':''}>Pending</option><option ${x.status==='Completed'?'selected':''}>Completed</option><option ${x.status==='Cancelled'?'selected':''}>Cancelled</option></select></td></tr>`).join('')}</table></div>`;
+root.querySelectorAll('[data-s]').forEach(sel=>sel.onchange=()=>{const i=+sel.dataset.s; const all=st.get('bookings',[]); if(all[i]){all[i].status=sel.value; st.set('bookings',all); u.toast('Status updated');}})
+})();
