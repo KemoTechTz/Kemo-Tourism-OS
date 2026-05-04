@@ -8,3 +8,13 @@ h1,h2,h3,.hfont{font-family:'Playfair Display',serif}
 .reveal{opacity:0;transform:translateY(16px);transition:.55s}.reveal.show{opacity:1;transform:none}
 .fade{animation:fade .45s ease}@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 .counter{transition:all .4s}
+:root{--glass:rgba(255,255,255,.14)}
+.glass{background:var(--glass);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.2)}
+.dark .glass{background:rgba(2,6,23,.45);border-color:rgba(255,255,255,.08)}
+.reveal{opacity:0;transform:translateY(22px);transition:.7s ease}
+.reveal.show{opacity:1;transform:none}
+.page-enter{animation:fadeIn .45s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.skeleton{background:linear-gradient(90deg,#e2e8f0,#f8fafc,#e2e8f0);background-size:200% 100%;animation:shimmer 1.2s linear infinite}
+.dark .skeleton{background:linear-gradient(90deg,#1e293b,#334155,#1e293b);background-size:200% 100%}
+@keyframes shimmer{to{background-position:-200% 0}}
