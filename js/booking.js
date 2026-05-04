@@ -1,0 +1,6 @@
+document.addEventListener('DOMContentLoaded',()=>{
+const root=document.getElementById('bookingRoot'); if(!root) return;
+const id=new URLSearchParams(location.search).get('id');const p=(window.KEMO_DATA||[]).find(x=>String(x.id)===String(id))||(window.KEMO_DATA||[])[0]; if(!p){root.innerHTML='No experience available.';return;}
+root.innerHTML=`<a href='./experiences.html' class='chip'>Back to Experiences</a><div class='glass p-4 rounded-xl mt-3'><h1 class='hfont text-3xl'>Premium Booking Engine</h1><input id='name' class='bg-slate-900 p-2 rounded w-full my-2' placeholder='Full name (required)'><button id='bookBtn' class='chip'>Confirm Booking</button><p id='err' class='text-rose-300 text-sm'></p><div id='confirm' class='mt-3'></div></div>`;
+bookBtn.onclick=()=>{if(!name.value.trim()){err.textContent='Please enter full name.';return;} err.textContent='';const ref=window.KEMO_UTILS.ref();window.KEMO_STORAGE.push('bookings',{ref,name:name.value,title:p.title,destination:p.destination,priceUSD:p.priceUSD,status:'Confirmed',paymentStatus:'Paid'});confirm.innerHTML=`<div class='fade-up'>Booking Confirmed ${ref}<div class='mt-2'><a href='./guest-portal.html' class='chip'>View Guest Portal</a> <a href='./admin.html' class='chip'>Open Admin Command Center</a></div></div>`;window.KEMO_UTILS.showToast('Booking saved to localStorage');};
+});
